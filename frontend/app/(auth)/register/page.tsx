@@ -32,7 +32,7 @@ export default function RegisterPage() {
         password: data.password,
       });
       localStorage.setItem("token", loginResponse.access_token);
-      router.push("/dashboard");
+      router.push("/campaigns")
     } catch (err: any) {
       setError(err.response?.data?.detail || "An error occurred during registration");
     } finally {
