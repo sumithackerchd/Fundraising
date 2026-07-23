@@ -1,30 +1,25 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+
+from app.core.database import Base, engine
+
+from app.models.user import User
+
+from app.routes.auth import router as auth_router
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="FundRaise AI API",
-    description="AI Powered Crowdfunding Platform",
+    title="FundRaise AI",
     version="1.0.0",
 )
 
-# CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app.include_router(auth_router)
+
 
 @app.get("/")
-async def root():
-    return {
-        "success": True,
-        "message": "🚀 FundRaise AI Backend Running Successfully"
-    }
+def home():
 
-@app.get("/health")
-async def health():
     return {
-        "status": "healthy"
+        "status": "success",
+        "message": "FundRaise AI Backend Running 🚀"
     }
